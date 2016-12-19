@@ -1,12 +1,11 @@
 var url = "https://script.google.com/macros/s/AKfycbyGgCq620zVimQWpbejY5O7IOaolRLRpkUrzTdVjXKaTd-Wj6E/exec"
 var names, usedNames = {}, lastName;
 
-function getNames(name){
-    var request = url + "?getNames";
-    
+function focusAction(name){
     if(names == undefined){
+        var request = url + "?func=getNames";
         var xhttp = new XMLHttpRequest();
-        xhttp.open("GET",url, true);
+        xhttp.open("GET",request, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send();
         xhttp.onreadystatechange = function() {
@@ -14,19 +13,17 @@ function getNames(name){
                 names = xhttp.responseText;
                 names = JSON.parse(names);
                 names.sort();
-                document.getElementById("dummy").innerHTML = names; /* TODO: Debug*/
+                //debuger(names); /* TODO: Debug*/
             }else if(xhttp.readyState == 4){
-                alert("החיבור נכשל");
                 document.getElementById("dummy").focus();
+                alert("החיבור נכשל");
             }
         };
+    }else{
+        debuger(name);//TODO: debug
+        usedNames[name] = false;
+        
     }
-}
-
-
-function removeValueName(name){
-    document.getElementById("dummy").innerHTML = name;//TODO: debug
-    usedNames[name] = false;
 }
 
 function validName(name, doAlert, focus){
@@ -44,7 +41,7 @@ function validName(name, doAlert, focus){
             }
         }
     }else{
-        document.getElementById("dummy").innerHTML = usedNames[name];//TODO: debug
+        debuger(usedNames[name]);//TODO: debug
     }
     document.getElementById(focus).value = "";
     if(doAlert === true){
@@ -52,6 +49,23 @@ function validName(name, doAlert, focus){
     }
     return false;
 }
+
+function validDesc(desc){
+    return true; //TODO: debug
+}
+
+function debuger(msg){
+    if(document.getElementById("dummy").innerHTML !== undefined)
+        document.getElementById("dummy").innerHTML = document.getElementById("dummy").innerHTML + "<br>DEBUG: "+msg;
+    else
+        document.getElementById("dummy").innerHTML = "DEBUG: "+ msg;
+}
+
+
+
+
+
+/*################~~~~API~~~~################*/
 
 function Complete(obj, evt) {
     if(names == undefined){
@@ -117,20 +131,3 @@ function Complete(obj, evt) {
         obj.setSelectionRange(ini, obj.value.length);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -2,9 +2,11 @@
 <html>
   <head>
     <base target="_top">
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="dataHandler.js"></script>
+    <script src="localFormHandler.js"></script>
+    <script src="send.js"></script>
     
     <style>
       #border #info-box #info #box input[type="text"] {
@@ -43,73 +45,26 @@
           direction:rtl;
       }
     </style>
-     <script type='text/javascript'>
-         var suersAmount = 0;
-         var suedAmount = 0;
-         
-         function addSuer(){
-             // Container <div> where dynamic content will be placed
-             var container = document.getElementById("suersContainer");
-             if(container.lastChild.value != ""){
-                // Create an <input> element, set its type and name attributes
-                var input = document.createElement("input");
-                input.type = "text";
-                input.name = "suer" + (suersAmount + 1);
-                input.id = "suer" + (suersAmount + 1);
-                input.placeholder = "שם תובע";
-                input.addEventListener("blur", function(){validName(this.value, true, this.id)});
-                input.addEventListener("focus", function(){removeValueName(this.value)});
-                input.onkeyup=function(){Complete(this,event)};
-                input.backspace='false';
-                input.onblur = "validName(this.value, true, this.id)"
-                container.appendChild(input);
-                suersAmount++;                 
-             }
-         }
-         
-         function addSued(){
-             // Container <div> where dynamic content will be placed
-             var container = document.getElementById("suedContainer");
-            if(container.lastChild.value != ""){
-                // Create an <input> element, set its type and name attributes
-                var input = document.createElement("input");
-                input.type = "text";
-                input.name = input.id = "sued" + (suedAmount + 1);
-                input.id = "suer" + (suersAmount + 1);
-                input.placeholder = "שם נתבע";
-                document.getElementById("suer1").onblur=function(){validName(this.value, true, this.id)};
-                input.onkeyup=function(){Complete(this,event)};
-                input.addEventListener("blur", function(){validName(this.value, true, this.id)});
-                input.addEventListener("focus", function(){removeValueName(this.value)});
-                input.backspace='false';
-                input.onblur = "validName(this.value, true, this.id)"
-                container.appendChild(input);
-                suedAmount++;
-            }
-         }
-     </script>
+     
   </head>
   <body dir="rtl">
-      <script>
-            // getNames()
-      </script>
-    <form action"">
+    <form id="form">
       שמות התובעים:<br>
       <div id="suersContainer">
-          <input type="text" backspace='false' onKeyUp="Complete(this, event)" onfocus="getNames(this.value)" onblur="validName(this.value, true, this.id)" placeholder="שם תובע" id="suer0" name="suer0" required>
+          <input type="text" backspace='false' onKeyUp="Complete(this, event)" onfocus="focusAction(this.value)" onblur="validName(this.value, true, this.id)" placeholder="שם תובע" id="suer0" name="suer0" required>
       </div>
       <button type="button" onclick="addSuer()">הוסף תובע</button>
       <br><br>
       שמות הנתבעים:<br>
       <div id="suedContainer">
-          <input type="text" backspace='false' onKeyUp="Complete(this, event)" onfocus="getNames(this.value)" onblur="validName(this.value, true, this.id)" placeholder="שם נתבע" id="sued0" name="sued0" required>
+          <input type="text" backspace='false' onKeyUp="Complete(this, event)" onfocus="focusAction(this.value)" onblur="validName(this.value, true, this.id)" placeholder="שם נתבע" id="sued0" name="sued0" required>
       </div>
       <button type="button" onclick="addSued()">הוסף נתבע</button>
       <br><br>
       תאור המקרה על ידי המתלונן/ת:<br>
       <textarea onblur="validDesc()" name="description" id="description" class="form-control" placeholder="הכנס/י את תאור המקרה כאן" required></textarea><br>
       
-      <input type="submit" value="שלח">
+      <input type="button" onclick="sendComplaint()" value="שלח">
       
     </form>
     

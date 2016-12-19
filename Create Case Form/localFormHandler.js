@@ -54,6 +54,7 @@ function addSued(){
 function sendComplaint(){
     alert("sending");
     var suers=[], sued=[], desc;
+	var status = 1, err = "";
     var element;
     var i = 0;
     while(i <= suersAmount){
@@ -61,7 +62,7 @@ function sendComplaint(){
             break;
         }
         if(element.value != ""){
-            sued.push(element.value);
+            suers.push(element.value);
         }
         i++;
     }
@@ -71,11 +72,27 @@ function sendComplaint(){
             break;
         }
         if(element.value != ""){
-            suers.push(element.value);
+            sued.push(element.value);
         }
         i++;
     }
-    desc = document.getElementById("description").value);
+    desc = document.getElementById("description").value;
+	if(suers.length == 0){
+		err+=("כמות התובעים קטנה מדי\n");
+		status = 0;
+	}
+	if(sued.length == 0){
+		err+=("כמות הנתבעים קטנה מדי\n");
+		status = 0;
+	}
+	if(desc == "" || desc == undefined || desc.length < 50){
+		err+=("הינך מנסה לשלוח תלונה ללא תיאור או שהתיאור קצר מדי.\n");
+		status = 0;
+	}
+	if(status == 0){
+		alert(err);
+		return;
+	}
     document.getElementById("form").innerHTML = "";
     send(encodeURI(suers), encodeURI(sued), encodeURI(desc));
 }
