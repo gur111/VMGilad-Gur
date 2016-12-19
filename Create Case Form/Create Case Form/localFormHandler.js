@@ -51,7 +51,7 @@ function addSued(){
 
 /*######################~~~~~SENDING PART~~~~#################*/
 
-function sendComplain(){
+function sendComplaint(){
     alert("sending");
     var suers=[], sued=[], desc;
     var element;
@@ -75,9 +75,9 @@ function sendComplain(){
         }
         i++;
     }
-    desc = document.getElementById("description").value;
+    desc = document.getElementById("description").value);
     document.getElementById("form").innerHTML = "";
-    send(suers, sued, desc);
+    send(encodeURI(suers), encodeURI(sued), encodeURI(desc));
 }
 
 function send(suers, sued, desc){
