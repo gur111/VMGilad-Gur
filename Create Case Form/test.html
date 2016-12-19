@@ -1,0 +1,97 @@
+<!-- Scripts by hscripts.com-->
+<!-- More scripts @ www.hscripts.com-->
+<script type="text/javascript">
+var aMail = new Array("albert@mail.com","beth@mail.com","harry@mail.com");
+aMail.sort();
+<!-- Declare the array and store the values according to ur usage -->
+function Complete(obj, evt) {
+    if ((!obj) || (!evt) || (aMail.length == 0)) {
+        return;
+    }
+
+    if (obj.value.length == 0) {
+        return;
+    }
+
+    var elm = (obj.setSelectionRange) ? evt.which : evt.keyCode;
+
+    if ((elm < 32) || (elm >= 33 && elm <= 46) || (elm >= 112 && elm <= 123)) {
+        return;
+    }
+
+    var txt = obj.value.replace(/;/gi, ",");
+    elm = txt.split(",");
+    txt = elm.pop();
+    txt = txt.replace(/^\s*/, "");
+
+    if (txt.length == 0) {
+        return;
+    }
+
+    if (obj.createTextRange) {
+        var rng = document.selection.createRange();
+        if (rng.parentElement() == obj) {
+            elm = rng.text;
+            var ini = obj.value.lastIndexOf(elm);
+        }
+    } else if (obj.setSelectionRange) {
+        var ini = obj.selectionStart;
+    }
+
+    for (var i = 0; i < aMail.length; i++) {
+        elm = aMail[i].toString();
+
+        if (elm.toLowerCase().indexOf(txt.toLowerCase()) == 0) {
+            obj.value += elm.substring(txt.length, elm.length);
+            break;
+        }
+    }
+
+    if (obj.createTextRange) {
+        rng = obj.createTextRange();
+        rng.moveStart("character", ini);
+        rng.moveEnd("character", obj.value.length);
+        rng.select();
+    } else if (obj.setSelectionRange) {
+        obj.setSelectionRange(ini, obj.value.length);
+    }
+}
+</script>
+<style type="text/css">
+.output
+{
+font-family:Arial;
+font-size: 10pt;
+color:black;
+padding-left: 3px;
+padding-top: 3px;
+border: 1px solid #000000;
+width: 100px;
+background: #fff;
+}
+.shadow
+{
+width:102px;
+position:relative;
+top: 2px;
+left: 2px;
+background: #555;
+}
+.shadow div{
+position:relative;
+top: -2px;
+left: -2px;
+}
+</style>
+<body onLoad="init();">
+<form name="test" id="test">
+<center>
+<input type="text" name="text" autocomplete="off"></center>
+</form>
+<div class="shadow" id="shadow">
+<div class="output" id="output">
+</div>
+<input type="text" name="anyName" onKeyUp="Complete(this, event)">
+</div><div align=center>
+©<a href="https://www.hscripts.com" style="color:#3D366F;text-decoration:none;cursor:pointer;font-size:13px">hscripts.com</a></div>
+</body>
