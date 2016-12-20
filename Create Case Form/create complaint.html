@@ -45,7 +45,7 @@
           direction:rtl;
       }
     </style>
-     
+    <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
   <body dir="rtl">
     <form id="form">
@@ -64,8 +64,7 @@
       תאור המקרה על ידי המתלונן/ת:<br>
       <textarea onblur="validDesc()" name="description" id="description" class="form-control" placeholder="הכנס/י את תאור המקרה כאן" onKeyUp='updateCounter(this);' required></textarea><br>
       <div id="count"></div>
-      <input type="button" onclick="sendComplaint()" value="שלח">
-      
+	  <button type="button" onclick="sendComplaint()" class="g-recaptcha" data-sitekey="6LcSWQ8UAAAAAMuIg2yxvJe_7mchK_0hglfUbQQy" data-callback="YourOnSubmitFn">הגש תלונה</button>
     </form>
     
     <div id="dummy" style="visibility:hidden">

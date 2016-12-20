@@ -103,7 +103,7 @@ function sendComplaint(){
 		return;
 	}
 	if(confirm("האם אתה בטוח שהינך רוצה לשלוח את התלונה הבאה?\nתובעים: "+String(suers).replace(/,/g,", ")+"\nנתבעים: "+String(sued).replace(/,/g,", ")+"\nתאור המקרה:\n"+desc)){
-		document.getElementById("form").innerHTML = "";
+		document.getElementById("form").innerHTML = "שולח את התלונה, אנא לא לסגור חלון זה עדיין.";
 		send(encodeURI(suers), encodeURI(sued), encodeURI(desc));
 	}else{
 		alert("השליחה בוטלה!");
@@ -118,9 +118,13 @@ function send(suers, sued, desc){
     xhttp.send("suers="+JSON.stringify(suers)+"&sued="+JSON.stringify(sued)+"&desc="+desc);
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-            alert(xhttp.responseText);
+			document.getElementById("form").innerHTML = "התלונה עברקה בהצלחה, אפשר לסגור חלון זה";
+			document.getElementById("form").style.color = "green";
+			alert(xhttp.responseText);
         }else if(xhttp.readyState == 4){
-            document.getElementById("dummy").focus();
+            document.getElementById("form").style.color = "red";
+			document.getElementById("form").innerHTML = "שליחת התלונה נכשלה. אנא נסה שנית מאוחר יותר.\nאם שגיאה זו חוזרת אנא פנה לתמיכה הטכנית של הועדה.";
+			document.getElementById("dummy").focus();
             alert("החיבור נכשל");
         }
     };
