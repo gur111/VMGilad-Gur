@@ -62,8 +62,8 @@
       <button type="button" onclick="addSued()">הוסף נתבע</button>
       <br><br>
       תאור המקרה על ידי המתלונן/ת:<br>
-      <textarea onblur="validDesc()" name="description" id="description" class="form-control" placeholder="הכנס/י את תאור המקרה כאן" required></textarea><br>
-      
+      <textarea onblur="validDesc()" name="description" id="description" class="form-control" placeholder="הכנס/י את תאור המקרה כאן" onKeyUp='updateCounter(this);' required></textarea><br>
+      <div id="count"></div>
       <input type="button" onclick="sendComplaint()" value="שלח">
       
     </form>

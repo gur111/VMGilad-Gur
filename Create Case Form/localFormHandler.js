@@ -48,6 +48,16 @@ function addSued(){
    }
 }
 
+function updateCounter(doc) {
+	var length = doc.value.length;
+	var holder = document.getElementById('count');
+	holder.innerHTML = "תווים: " + (length);
+	if(length < 50)
+		holder.style.color = "red";
+	else
+		holder.style.color = "green"
+}
+
 
 /*######################~~~~~SENDING PART~~~~#################*/
 
