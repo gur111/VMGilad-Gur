@@ -52,7 +52,6 @@ function addSued(){
 /*######################~~~~~SENDING PART~~~~#################*/
 
 function sendComplaint(){
-    alert("sending");
     var suers=[], sued=[], desc;
 	var status = 1, err = "";
     var element;
@@ -93,8 +92,12 @@ function sendComplaint(){
 		alert(err);
 		return;
 	}
-    document.getElementById("form").innerHTML = "";
-    send(encodeURI(suers), encodeURI(sued), encodeURI(desc));
+	if(confirm("האם אתה בטוח שהינך רוצה לשלוח את התלונה הבאה?\nתובעים: "+String(suers).replace(/,/g,", ")+"\nנתבעים: "+String(sued).replace(/,/g,", ")+"\nתאור המקרה:\n"+desc)){
+		document.getElementById("form").innerHTML = "";
+		send(encodeURI(suers), encodeURI(sued), encodeURI(desc));
+	}else{
+		alert("השליחה בוטלה!");
+	}
 }
 
 function send(suers, sued, desc){
