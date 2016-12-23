@@ -1,24 +1,35 @@
 var url = "https://script.google.com/macros/s/AKfycbyGgCq620zVimQWpbejY5O7IOaolRLRpkUrzTdVjXKaTd-Wj6E/exec"
 var names, usedNames = {}, lastName;
 
+
+function generalSetup(){
+	if(names == undefined){ // Loading Names
+        loadNames();
+    }
+}
+
+function loadNames(){
+	var request = url + "?func=getNames";
+	var xhttp = new XMLHttpRequest();
+	xhttp.open("GET",request, true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send();
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4 && xhttp.status == 200) {
+			names = xhttp.responseText;
+			names = JSON.parse(names);
+			names.sort();
+			//debuger(names); /* TODO: Debug*/
+		}else if(xhttp.readyState == 4){
+			document.getElementById("dummy").focus();
+			alert("החיבור נכשל");
+		}
+	};
+}
+
 function focusAction(name){
-    if(names == undefined){
-        var request = url + "?func=getNames";
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("GET",request, true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send();
-        xhttp.onreadystatechange = function() {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                names = xhttp.responseText;
-                names = JSON.parse(names);
-                names.sort();
-                //debuger(names); /* TODO: Debug*/
-            }else if(xhttp.readyState == 4){
-                document.getElementById("dummy").focus();
-                alert("החיבור נכשל");
-            }
-        };
+    if(names == undefined){ // Loading Names
+        loadNames();
     }else{
         debuger(name);//TODO: debug
         usedNames[name] = false;
@@ -51,8 +62,32 @@ function validName(name, doAlert, focus){
 }
 
 function validDesc(desc){
-    return true; //TODO: debug
+    if(desc == "" || desc == undefined || desc.length < 50){
+		return false;
+	}
+	return true; //TODO: Add requirements
 }
+
+function collectNames(role){
+	collected = [];
+	var i = 0;
+	while(i <= amountByRole[role]){
+        if((element = document.getElementById(role+i)) == undefined){
+            break;
+        }
+        if(element.value != ""){
+            collected.push(element.value);
+        }
+        i++;
+    }
+	return collected;
+	
+}
+
+function getDesc(){
+	return document.getElementById("description").value;
+}
+
 
 function debuger(msg){
     if(document.getElementById("dummy").innerHTML !== undefined)
@@ -62,12 +97,9 @@ function debuger(msg){
 }
 
 
-
-
-
 /*################~~~~API~~~~################*/
 
-function Complete(obj, evt) {
+function CompleteName(obj, evt) {
     if(names == undefined){
         obj.value = "";
         obj.blur;

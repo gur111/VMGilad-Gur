@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
   <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <base target="_top">
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script src="dataHandler.js"></script>
-    <script src="localFormHandler.js"></script>
-    <script src="send.js"></script>
+    <script src="Create Case Form/dataHandler.js"></script>
+    <script src="Create Case Form/localFormHandler.js"></script>
+	<script src="Create Case Form/complaintHandler.js"></script>
     
     <style>
       #border #info-box #info #box input[type="text"] {
@@ -48,19 +48,19 @@
     </style>
     <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
-  <body dir="rtl">
+  <body onload="complaintSetup();" dir="rtl">
     <form id="form">
       שמות התובעים:<br>
       <div id="suersContainer">
-          <input class = "names" type="text" backspace='false' onKeyUp="Complete(this, event)" onfocus="focusAction(this.value)" onblur="validName(this.value, true, this.id)" placeholder="שם תובע" id="suer0" name="suer0" required>
+          <input class = "names" type="text" backspace='false' onKeyUp="CompleteName(this, event)" onfocus="focusAction(this.value)" onblur="validName(this.value, true, this.id)" placeholder="שם תובע" id="suer0" name="suer0" required>
       </div>
-      <button class="addButton" type="button" onclick="addSuer()">הוסף תובע</button>
+      <button class="addButton" type="button" onclick="addName('suer')">הוסף תובע</button>
       <br><br>
       שמות הנתבעים:<br>
       <div id="suedContainer">
-          <input class = "names" type="text" backspace='false' onKeyUp="Complete(this, event)" onfocus="focusAction(this.value)" onblur="validName(this.value, true, this.id)" placeholder="שם נתבע" id="sued0" name="sued0" required>
+          <input class = "names" type="text" backspace='false' onKeyUp="CompleteName(this, event)" onfocus="focusAction(this.value)" onblur="validName(this.value, true, this.id)" placeholder="שם נתבע" id="sued0" name="sued0" required>
       </div>
-      <button class="addButton" type="button" onclick="addSued()">הוסף נתבע</button>
+      <button class="addButton" type="button" onclick="addName('sued')">הוסף נתבע</button>
       <br><br>
       תאור המקרה על ידי המתלונן/ת:<br>
       <textarea onblur="validDesc()" name="description" id="description" class="form-control" placeholder="הכנס/י את תאור המקרה כאן" onKeyUp='updateCounter(this);' required></textarea><br>
