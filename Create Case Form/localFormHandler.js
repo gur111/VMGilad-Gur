@@ -3,7 +3,7 @@
 function addSuer(){
     // Container <div> where dynamic content will be placed
     var container = document.getElementById("suersContainer");
-    
+
     if(suersAmount == 0 && document.getElementById("suer0").value == ""){
         return;
     }
@@ -20,7 +20,7 @@ function addSuer(){
        input.backspace='false';
        input.onblur = "validName(this.value, true, this.id)"
        container.appendChild(input);
-       suersAmount++;                 
+       suersAmount++;
     }
 }
 
@@ -49,7 +49,7 @@ function addSued(){
 */
 
 function addName(role){
-	    // Container <div> where dynamic content will be placed
+    // Container <div> where dynamic content will be placed
     var container = document.getElementById(role+"Container");
     if(amountByRole[role] == 0 && document.getElementById(role+"0").value == ""){
         return;
@@ -63,9 +63,9 @@ function addName(role){
         input.placeholder = placeHolderByRole[role];
         input.addEventListener("blur", function(){validName(this.value, true, this.id)});
         input.addEventListener("focus", function(){focusAction(this.value)});
-        input.onkeyup=function(){CompleteName(this,event)};
+        input.onkeyup=function(event){CompleteName(this,event)};
         input.backspace='false';
-		input.class=role+" names";
+    		input.class=role+" names";
         input.onblur = "validName(this.value, true, this.id)"
         container.appendChild(input);
         amountByRole[role]++;

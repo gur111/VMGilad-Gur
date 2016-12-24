@@ -19,10 +19,14 @@ function loadNames(){
 			names = xhttp.responseText;
 			names = JSON.parse(names);
 			names.sort();
+			// remove loading animation
+			$("#loading-cont").animate({opacity: 0, height: 0},
+				function(){ $(this).hide() });
+
 			//debuger(names); /* TODO: Debug*/
 		}else if(xhttp.readyState == 4){
 			document.getElementById("dummy").focus();
-			alert("החיבור נכשל");
+			goodLookingAlert("החיבור נכשל");
 		}
 	};
 }
@@ -33,7 +37,7 @@ function focusAction(name){
     }else{
         debuger(name);//TODO: debug
         usedNames[name] = false;
-        
+
     }
 }
 
@@ -42,7 +46,7 @@ function validName(name, doAlert, focus){
         return true;
     }else if(names === undefined){
         document.getElementById(focus).value = "";
-        alert("אין חיבור לאינטרנט");
+        goodLookingAlert("אין חיבור לאינטרנט");
         return false;
     }else if(usedNames[name] != true){
         for( var i = 0; i<names.length; i++){
@@ -56,7 +60,7 @@ function validName(name, doAlert, focus){
     }
     document.getElementById(focus).value = "";
     if(doAlert === true){
-        alert("שם לא חוקי, אנא הכנס שם משפחה ולאחת מכן שם פרטי");
+        goodLookingAlert("שם לא חוקי, אנא הכנס שם משפחה ולאחת מכן שם פרטי");
     }
     return false;
 }
@@ -81,7 +85,7 @@ function collectNames(role){
         i++;
     }
 	return collected;
-	
+
 }
 
 function getDesc(){
@@ -103,7 +107,7 @@ function CompleteName(obj, evt) {
     if(names == undefined){
         obj.value = "";
         obj.blur;
-        alert("אנא חכה לטעינת השמות");
+        goodLookingAlert("אנא חכה לטעינת השמות");
         return;
     }else if(obj.backspace == true){
         return;
@@ -147,7 +151,7 @@ function CompleteName(obj, evt) {
         if(usedNames[elm] == true){
             continue;
         }
-            
+
         if (elm.toLowerCase().indexOf(txt.toLowerCase()) == 0) {
             obj.value += elm.substring(txt.length, elm.length);
             break;

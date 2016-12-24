@@ -1,0 +1,63 @@
+/* For loading anf loading animations */
+
+#loading-cont{
+  text-align: center;
+  color: rgba(0, 0, 0, 0.5);
+}
+#first-loading-line{
+  float: left;
+  width: 50%;
+  height: 8px;
+  background: blue;
+
+  animation-name: load;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+#second-loading-line{
+  width: 50%;
+  float: right;
+  height: 8px;
+  background: red;
+
+  animation-name: load-two;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes load-two{
+  0%{
+    width: 100%;
+    background: red;
+  }
+  40%{
+    width: 0%;
+    background: blue;
+  }
+  60%{
+    width: 0%;
+    background: red;
+  }
+  100%{
+    width: 100%;
+    background: red;
+  }
+}
+@keyframes load{
+  0%{
+    width: 0%;
+    background: blue;
+  }
+  40%{
+    width: 100%;
+    background: blue;
+  }
+  60%{
+    width: 100%;
+    background: blue;
+  }
+  100%{
+    width: 0%;
+    background: red;
+  }
+}

@@ -2,76 +2,120 @@
 <html>
   <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+    <!-- Bootstrap's CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      media="screen" charset="utf-8">
+    <!-- Our CSS -->
+    <link rel="stylesheet" href="styles.css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="loading.css" media="screen" charset="utf-8">
+
     <base target="_top">
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <!-- Needed? -->
+    <!-- <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
+
     <script src="Create Case Form/dataHandler.js"></script>
     <script src="Create Case Form/localFormHandler.js"></script>
-	<script src="Create Case Form/complaintHandler.js"></script>
-    
-    <style>
-      #border #info-box #info #box input[type="text"] {
-        float: left;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        height: 25px; 
-        width: 650px; 
-        outline: none;
-      }
-      
-      #border #info-box #info #box input[type="submit"] {
-        margin-left: 500px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        height: 35px; 
-        color: #fff;
-        font-size: 20px;
-        border: 2px solid #fff;
-        border-radius: 8px 8px 8px 8px;
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-top: 3px;
-        cursor: pointer;  
-      }
-      
-      #description{
-          width:300px;
-          height: 100px;
-      }
-      input{
-          margin-left: 10px;
-          margin-bottom: 10px;
-      }
-      *{
-          direction:rtl;
-      }
-    </style>
+  	<script src="Create Case Form/complaintHandler.js"></script>
+
     <script src='https://www.google.com/recaptcha/api.js'></script>
+
   </head>
   <body onload="complaintSetup();" dir="rtl">
-    <form id="form">
-      שמות התובעים:<br>
-      <div id="suersContainer">
-          <input class = "names" type="text" backspace='false' onKeyUp="CompleteName(this, event)" onfocus="focusAction(this.value)" onblur="validName(this.value, true, this.id)" placeholder="שם תובע" id="suer0" name="suer0" required>
-      </div>
-      <button class="addButton" type="button" onclick="addName('suer')">הוסף תובע</button>
-      <br><br>
-      שמות הנתבעים:<br>
-      <div id="suedContainer">
-          <input class = "names" type="text" backspace='false' onKeyUp="CompleteName(this, event)" onfocus="focusAction(this.value)" onblur="validName(this.value, true, this.id)" placeholder="שם נתבע" id="sued0" name="sued0" required>
-      </div>
-      <button class="addButton" type="button" onclick="addName('sued')">הוסף נתבע</button>
-      <br><br>
-      תאור המקרה על ידי המתלונן/ת:<br>
-      <textarea onblur="validDesc()" name="description" id="description" class="form-control" placeholder="הכנס/י את תאור המקרה כאן" onKeyUp='updateCounter(this);' required></textarea><br>
-      <div id="count"></div>
-	  <button type="button" onclick="sendComplaint()" class="g-recaptcha" data-sitekey="6LcSWQ8UAAAAAMuIg2yxvJe_7mchK_0hglfUbQQy" data-callback="YourOnSubmitFn">הגש תלונה</button>
-    </form>
-    
-    <div id="dummy" style="visibility:hidden">
-        
+
+    <div id="errors-container">
+      <h1>שגיאות</h1>
     </div>
+
+    <header class="container">
+      <h1 id="main-header">הגשת תלונה</h1>
+
+      <div id="loading-cont">
+        <h2>טוען...</h2>
+        <div id="first-loading-line"></div>
+        <div id="second-loading-line"></div>
+      </div>
+
+    </header>
+
+    <form id="form" class="container">
+
+      <!-- The suers inputs -->
+      <div id="first-inputs-group" class="inputs-group">
+
+        <!-- Left part -->
+        <div class="col-xs-8 col-sm-10 row">
+          <div id="suersContainer">
+            <input class="names" type="text" backspace='false' onKeyUp="CompleteName(this, event)"
+              onfocus="focusAction(this.value)" onblur="validName(this.value, true, this.id)"
+              placeholder="שם תובע" id="suer0" name="suer0" required>
+          </div>
+
+          <button class="addButton col-xs-12" type="button" onclick="addName('suers')">הוסף תובע</button>
+        </div>
+
+        <!-- Titles -->
+        <h1 class="col-xs-4 col-sm-2">שמות התובעים</h1>
+        <h3 class="col-xs-4 col-sm-2">שם משפחה קודם</h3>
+
+      </div>
+
+      <br class="clear" />
+
+      <!-- The sueds inputs -->
+      <div class="inputs-group">
+
+        <!-- Left part -->
+        <div class="col-xs-8 col-sm-10 row">
+          <div id="suedContainer">
+            <input class="names" type="text" backspace='false' onKeyUp="CompleteName(this, event)"
+              onfocus="focusAction(this.value)" onblur="validName(this.value, true, this.id)"
+              placeholder="שם נתבע" id="sued0" name="sued0" required>
+          </div>
+
+          <button class="addButton col-xs-12" type="button" onclick="addName('sued')">הוסף נתבע</button>
+        </div>
+
+        <!-- Titles -->
+        <h1 class="col-xs-4 col-sm-2">שמות הנתבעים</h1>
+        <h3 class="col-xs-4 col-sm-2">שם משפחה קודם</h3>
+
+      </div>
+
+      <br class="clear" />
+
+      <!-- Description input -->
+      <div class="inputs-group">
+
+        <!-- Left part -->
+        <div class="col-xs-8 col-sm-10 row">
+          <textarea onblur="validDesc()" name="description" id="description" class="form-control"
+            placeholder="הכנס/י את תאור המקרה כאן" onKeyUp='updateCounter(this);' required></textarea>
+          <div id="count">לא הוכנס תיאור</div>
+        </div>
+
+        <!-- Titles -->
+        <h1 class="col-xs-4 col-sm-2">תיאור המקרה</h1>
+        <h3 class="col-xs-4 col-sm-2">חייב להיות לפחות 50 תווים</h3>
+
+      </div>
+
+      <br class="clear" />
+
+      <!-- Submit button -->
+	    <button type="button" onclick="sendComplaint()"
+        class="g-recaptcha btn btn-primary btn-lg btn-block"
+        data-sitekey="6LcSWQ8UAAAAAMuIg2yxvJe_7mchK_0hglfUbQQy" data-callback="YourOnSubmitFn">
+          הגש תלונה
+      </button>
+
+    </form>
+
+    <div id="dummy" style="visibility:hidden">
+
+    </div>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" charset="utf-8"></script>
   </body>
 </html>
-
-
