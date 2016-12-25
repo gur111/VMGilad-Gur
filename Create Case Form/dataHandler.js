@@ -95,9 +95,10 @@ function getDesc(){
 
 function debuger(msg){
     if(document.getElementById("dummy").innerHTML !== undefined)
-        document.getElementById("dummy").innerHTML = document.getElementById("dummy").innerHTML + "<br>DEBUG: "+msg;
+        document.getElementById("dummy").innerHTML += "<br>DEBUG: "+msg;
     else
         document.getElementById("dummy").innerHTML = "DEBUG: "+ msg;
+	console.log(msg);
 }
 
 

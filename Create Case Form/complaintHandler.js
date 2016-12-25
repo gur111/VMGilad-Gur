@@ -78,7 +78,7 @@ function send(suers, sued, desc){
 			document.getElementById("form").innerHTML = "התלונה עברה בהצלחה, אפשר לסגור חלון זה";
 			document.getElementById("form").style.color = "green";
 			goodLookingAlert(xhttp.responseText, false);
-			alert(xhttp.responseText);
+			// alert(xhttp.responseText);
         }else if(xhttp.readyState == 4){
             document.getElementById("form").style.color = "red";
 			document.getElementById("form").innerHTML = "שליחת התלונה נכשלה. אנא נסה שנית מאוחר יותר.\nאם שגיאה זו חוזרת אנא פנה לתמיכה הטכנית של הועדה.";
@@ -98,6 +98,7 @@ function send(suers, sued, desc){
  */
  // Recieves an ARRAY of errors to present
  function goodLookingAlert(messages, err, color, titleText){
+	 // alert(messages);
   // if string, turn into array
 	if(typeof messages === 'string' || messages instanceof String)
 		messages = [messages];
